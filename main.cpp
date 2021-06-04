@@ -49,8 +49,7 @@ int main()
 	// Set the size of the rendering window
 	glViewport(0, 0, 1280, 960);
 
-
-	float vertices[] =
+	GLfloat vertices[] =
 	{
 		-0.5f, -0.5f, 0.0f,
 		0.0f, 0.5f, 0.0f,
@@ -62,7 +61,7 @@ int main()
 	glGenBuffers(1, &VBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	// Simple Vertex Shader using GLSL
 	const char *vertexShaderSource = "#version 330 core\n"
@@ -72,7 +71,8 @@ int main()
 		" gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 		"}\0";
 
-	unsigned int vertexShader;
+	GLuint vertexShader;
+	// Creating an object is accessed by reference
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
@@ -101,7 +101,8 @@ int main()
 		"{\n"
 		" FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 		"}\0";
-	unsigned int fragmentShader;
+	GLuint fragmentShader;
+	// creating an object in OpenGL is accessed by reference
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
@@ -117,7 +118,7 @@ int main()
 	}
 
 	// Shader Program
-	unsigned int shaderProgram;
+	GLuint shaderProgram;
 	shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
@@ -141,20 +142,18 @@ int main()
 	glEnableVertexAttribArray(0);
 
 	// Process to generate a VAO
-	unsigned int VAO;
+	GLuint VAO;
 	glGenVertexArrays(1, &VAO);
 
 	// 1. bind Vertex Array Object
 	glBindVertexArray(VAO);
 	// 2. Copy our vertices array in a buffer for OpenGL to use
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, VAO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	// 3. set our vertex attributes pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float)*3,(void*)0);
-	//glEnableVertexAttribArray(0);
 
 	while(!glfwWindowShouldClose(window))
 	{	
@@ -177,6 +176,8 @@ int main()
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+
+	glfwDestroyWindow(window);
 	glfwTerminate();
 
 	return 0;
