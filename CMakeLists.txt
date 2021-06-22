@@ -23,3 +23,7 @@ target_link_libraries(glfw-practice glfw)
 find_package(OpenGL REQUIRED)
 
 target_link_libraries(glfw-practice OpenGL::GL)
+
+if (UNIX)
+  add_compile_options(-Wall -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl)
+endif (UNIX)
