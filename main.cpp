@@ -9,10 +9,10 @@ void processInput(GLFWwindow *window);
 int main(void)
 {
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	// Forward compat for macOSX
+	// Forward compat for macOS
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
 
 	GLuint WINDOW_WIDTH = 800;
@@ -36,6 +36,9 @@ int main(void)
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
+
+	// Print GL Version
+	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	// issues on retina display such that the width and height of the viewport
 	// must be the same as the frame buffer size
@@ -63,7 +66,6 @@ int main(void)
 		"{\n"
 		" FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 		"}\0";
-
 
 	// Create a Vertex Shader and Compile
 	GLuint vertexShader;
@@ -160,11 +162,13 @@ int main(void)
 	return 0;
 }
 
+// Resizes the viewport
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
+// Process Keyboard input
 void processInput(GLFWwindow *window)
 {
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
