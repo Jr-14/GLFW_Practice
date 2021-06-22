@@ -5,7 +5,7 @@ C++, GLFW3 and OpenGL through the tutorials provided in learnOpenGL and
 other sources.
 
 ## Learning Sources
-[**Learn OpenGL**] (https://learnopengl.com/)<br />
+[Learn OpenGL](https://learnopengl.com/) <br />
 
 [**YouTube - freeCodeCamp OpenGL Crash Course**] (https://www.youtube.com/watch?v=45MIykWJ-C4&t)<br />
 
