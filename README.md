@@ -7,3 +7,4 @@ other sources.
 ## Learning Sources
  - https://learnopengl.com/
  - https://www.youtube.com/watch?v=45MIykWJ-C4&t
+ - https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
