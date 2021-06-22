@@ -16,16 +16,21 @@ int main(void)
 	// Forward compat for macOSX
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
 
+	unsigned int WINDOW_WIDTH = 800;
+	unsigned int WINDOW_HEIGHT = 600;
+
 	// Initialize the window
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
+
 	// Make the current window the context
 	glfwMakeContextCurrent(window);
+
 
 	// Initialie glad after makng a window
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -34,11 +39,16 @@ int main(void)
 		return -1;
 	}
 
+	// issues on retina display such that the width and height of the viewport
+	// must be the same as the frame buffer size
+	// https://stackoverflow.com/questions/31303291/opengl-rendering-constricted-to-bottom-left-quarter-of-the-screen
+	int frameBufferWidth, frameBufferHeight;
+	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
 	// Set the size of the window view port
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, frameBufferWidth, frameBufferHeight);
 
 	// Resize the viewport when the user changes the size
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	 glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
 	// Vertex Shader Source Code
