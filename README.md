@@ -6,8 +6,8 @@ other sources.
 
 ## Learning Sources
 **OpenGL:**
- - https://learnopengl.com/
+ - https://learnopengl.com/<br />
 **freeCodeCamp OpenGL Crash Course:**
- - https://www.youtube.com/watch?v=45MIykWJ-C4&t
-**The Cherno - OpenGL Course Playlist:**
- - https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
+ - https://www.youtube.com/watch?v=45MIykWJ-C4&t<br />
+**The Cherno - OpenGL Course Playlist:**<br />
+ - https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2<br />
