@@ -3,7 +3,6 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -16,8 +15,8 @@ int main(void)
 	// Forward compat for macOSX
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
 
-	unsigned int WINDOW_WIDTH = 800;
-	unsigned int WINDOW_HEIGHT = 600;
+	GLuint WINDOW_WIDTH = 800;
+	GLuint WINDOW_HEIGHT = 600;
 
 	// Initialize the window
 	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "LearnOpenGL", NULL, NULL);
@@ -31,7 +30,6 @@ int main(void)
 	// Make the current window the context
 	glfwMakeContextCurrent(window);
 
-
 	// Initialie glad after makng a window
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -42,17 +40,16 @@ int main(void)
 	// issues on retina display such that the width and height of the viewport
 	// must be the same as the frame buffer size
 	// https://stackoverflow.com/questions/31303291/opengl-rendering-constricted-to-bottom-left-quarter-of-the-screen
-	int frameBufferWidth, frameBufferHeight;
+	GLint frameBufferWidth, frameBufferHeight;
 	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
 	// Set the size of the window view port
 	glViewport(0, 0, frameBufferWidth, frameBufferHeight);
 
 	// Resize the viewport when the user changes the size
-	 glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// Vertex Shader Source Code
-	const char *vertexShaderSource = "#version 330 core\n"
+	const GLchar *vertexShaderSource = "#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
 		"void main()\n"
 		"{\n"
@@ -60,7 +57,7 @@ int main(void)
 		"}\0";
 
 	// Fragment Shader Source Code
-	const char *fragmentShaderSource = "#version 330 core\n"
+	const GLchar *fragmentShaderSource = "#version 330 core\n"
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
@@ -69,19 +66,19 @@ int main(void)
 
 
 	// Create a Vertex Shader and Compile
-	unsigned int vertexShader;
+	GLuint vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 
 	// Create a Fragment Shader and Compile
-	unsigned int fragmentShader;
+	GLuint fragmentShader;
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
 
-	int success;
-	char infoLog[512];
+	GLint success;
+	GLchar infoLog[512];
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 
 	if(!success)
@@ -92,7 +89,7 @@ int main(void)
 	}
 
 	// Create a Shader Program
-	unsigned int shaderProgram;
+	GLuint shaderProgram;
 	shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
@@ -113,7 +110,7 @@ int main(void)
 	glDeleteShader(fragmentShader);
 
 	// Vertices to draw
-	float vertices[] = 
+	GLfloat vertices[] = 
 	{
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
@@ -121,11 +118,11 @@ int main(void)
 	};
 
 	// Create a VBO
-	unsigned int VBO;
+	GLuint VBO;
 	glGenBuffers(1, &VBO);
 
 	// Create a VAO
-	unsigned int VAO;
+	GLuint VAO;
 	glGenVertexArrays(1, &VAO);
 
 	// 1. bind Vertex Array Object
