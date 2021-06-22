@@ -1,0 +1,10 @@
+.vscode/*
+.history/*
+
+out/*
+out/build/*
+
+*.sh
+
+.DS_Store
+
