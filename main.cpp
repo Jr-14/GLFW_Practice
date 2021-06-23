@@ -126,7 +126,7 @@ int main(void)
 		// Drawing code in render loop
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
 		GLClearError();
-		glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 		GLCheckError();
 
 		// check and call events and swap the buffers
