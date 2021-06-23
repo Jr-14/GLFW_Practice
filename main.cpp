@@ -102,6 +102,9 @@ int main(void)
 	std::string vertexShaderSource = ParseShader("include/shaders/VertShader.glsl");
 	std::string fragmentShaderSource = ParseShader("include/shaders/FragShader.glsl");
 	GLuint shaderProgram = CreateShader(vertexShaderSource, fragmentShaderSource);
+	
+	// Wireframe mode if enabled
+	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
 	// Render Loop
 	while(!glfwWindowShouldClose(window))
@@ -128,7 +131,6 @@ int main(void)
 	glfwTerminate();
 	return 0;
 }
-
 
 // Resizes the viewport
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
