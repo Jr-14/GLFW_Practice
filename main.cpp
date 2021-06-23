@@ -13,6 +13,9 @@ static std::string ParseShader(const std::string &filepath);
 static unsigned int CompileShader(unsigned int type, const std::string &source);
 static unsigned int CreateShader(const std::string &vertexShader, const std::string &fragmentShader);
 
+static void GLClearError();
+static void GLCheckError();
+
 int main(void)
 {
 	glfwInit();
@@ -74,34 +77,38 @@ int main(void)
 		2, 3, 0
 	};
 
-	// Create a VBO
-	GLuint VBO;
-	glGenBuffers(1, &VBO);
-
-	// Create a VAO
-	GLuint VAO;
+	// Create a VBO, VAO, EBO
+	// VAO = Vertex Attribute Object
+	// VBO = Vertex Buffer Object
+	// EBO = Element Buffer Object
+	GLuint VBO, VAO, EBO;
 	glGenVertexArrays(1, &VAO);
+	// Generate Buffers for VBO and EBO
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
 	// 1. bind Vertex Array Object
 	glBindVertexArray(VAO);
+
 	// 2. copy our vertices array in a buffer for OpenGL to use
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);			// Binding VBO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // Binding EBO
+
+	//  Creates a data store for the buffer objects
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	// 3. then set our vertex attributes pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
 	(void*)0);
 	glEnableVertexAttribArray(0);
 
-	// Creating Index Buffer Objects
-	unsigned int IBO;
-	glGenBuffers(1, &IBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
 	// Create a Shader Program from a vertex shader source and fragment shader source
 	std::string vertexShaderSource = ParseShader("include/shaders/VertShader.glsl");
 	std::string fragmentShaderSource = ParseShader("include/shaders/FragShader.glsl");
 	GLuint shaderProgram = CreateShader(vertexShaderSource, fragmentShaderSource);
+	// Use the Shader Program
+	glUseProgram(shaderProgram);
 	
 	// Wireframe mode if enabled
 	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -117,10 +124,10 @@ int main(void)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Drawing code in render loop
-		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO);
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+		GLClearError();
+		glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
+		GLCheckError();
 
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);
@@ -130,6 +137,22 @@ int main(void)
 	// terminiate glfw
 	glfwTerminate();
 	return 0;
+}
+
+static void GLClearError()
+{
+	while (glGetError() != GL_NO_ERROR)
+	{
+		
+	}
+}
+
+static void GLCheckError()
+{
+	while (GLenum error = glGetError())
+	{
+		std::cout << "[OpenGL Error] (0x" << std::hex << error << ")"  << std::endl;
+	}
 }
 
 // Resizes the viewport
