@@ -58,17 +58,20 @@ int main(void)
 	// Resize the viewport when the user changes the size
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	// Create a Shader Program from a vertex shader source and fragment shader source
-	std::string vertexShaderSource = ParseShader("include/shaders/VertShader.glsl");
-	std::string fragmentShaderSource = ParseShader("include/shaders/FragShader.glsl");
-	GLuint shaderProgram = CreateShader(vertexShaderSource, fragmentShaderSource);
 
 	// Vertices to draw
 	GLfloat vertices[] = 
 	{
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
+		-0.5f, -0.5f, 0.0f, // 0
+		0.5f, -0.5f, 0.0f,  // 1
+		0.5f, 0.5f, 0.0f,	// 2
+		-0.5f, 0.5f, 0.0f,	// 3
+	};
+
+	unsigned int indices[] =
+	{
+		0, 1, 2,
+		2, 3, 0
 	};
 
 	// Create a VBO
@@ -89,6 +92,17 @@ int main(void)
 	(void*)0);
 	glEnableVertexAttribArray(0);
 
+	// Creating Index Buffer Objects
+	unsigned int IBO;
+	glGenBuffers(1, &IBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// Create a Shader Program from a vertex shader source and fragment shader source
+	std::string vertexShaderSource = ParseShader("include/shaders/VertShader.glsl");
+	std::string fragmentShaderSource = ParseShader("include/shaders/FragShader.glsl");
+	GLuint shaderProgram = CreateShader(vertexShaderSource, fragmentShaderSource);
+
 	// Render Loop
 	while(!glfwWindowShouldClose(window))
 	{
@@ -102,7 +116,8 @@ int main(void)
 		// Drawing code in render loop
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);
