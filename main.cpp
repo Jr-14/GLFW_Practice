@@ -62,7 +62,7 @@ int main(void)
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-	// Vertices to draw
+	// Vertices to draw an equilateral triangle
 	GLfloat vertices[] = 
 	{
 		-0.5f, -0.5f, 0.0f, // 0
@@ -75,6 +75,24 @@ int main(void)
 	{
 		0, 1, 2,
 		2, 3, 0
+	};
+
+	// Vertices and indices to draw 3 stacking triangles on top of each other
+	GLfloat three_triangle_vert[] =
+	{
+		-0.5f, -0.5f, 0.0f, 	// 0 - bottom left
+		 0.0f, -0.5f, 0.0f,		// 1 - bottom bottom
+		 0.5f, -0.5f, 0.0f,		// 2 - bottom right
+		-0.25f, 0.0f, 0.0f,		// 3 - middle left
+		 0.25f, 0.0f, 0.0f,		// 4 - middle right
+		 0.0f,	0.5f, 0.0f		// 5 - top
+	};
+
+	unsigned int three_triangle_indices[] =
+	{
+		0, 1, 3,
+		1, 2, 4,
+		3, 4, 5
 	};
 
 	// Create a VBO, VAO, EBO
@@ -95,8 +113,8 @@ int main(void)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // Binding EBO
 
 	//  Creates a data store for the buffer objects
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(three_triangle_vert), three_triangle_vert, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(three_triangle_indices), three_triangle_indices, GL_STATIC_DRAW);
 
 	// 3. then set our vertex attributes pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
@@ -111,7 +129,7 @@ int main(void)
 	glUseProgram(shaderProgram);
 	
 	// Wireframe mode if enabled
-	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	// Render Loop
 	while(!glfwWindowShouldClose(window))
@@ -126,7 +144,7 @@ int main(void)
 		// Drawing code in render loop
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
 		GLClearError();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, nullptr);
 		GLCheckError();
 
 		// check and call events and swap the buffers
