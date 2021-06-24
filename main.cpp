@@ -65,17 +65,15 @@ int main(void)
 
 	// Vertices to draw an equilateral triangle
 	GLfloat vertices[] = 
-	{
-		-0.5f, -0.5f, 0.0f, // 0
-		0.5f, -0.5f, 0.0f,  // 1
-		0.5f, 0.5f, 0.0f,	// 2
-		-0.5f, 0.5f, 0.0f,	// 3
+	{	// positions        // Colours
+		-0.5f,  -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,	 // 0 - bottom right
+		 0.5f,  -0.5f,  0.0f,  0.0f,  1.0f,  0.0f,   // 1 - bottom left
+		 0.0f,   0.5f,  0.0f,  0.0f,  0.0f,  1.0f	 // 2 - top middle
 	};
 
 	unsigned int indices[] =
 	{
-		0, 1, 2,
-		2, 3, 0
+		0, 1, 2
 	};
 
 	// Vertices and indices to draw 3 stacking triangles on top of each other
@@ -112,16 +110,22 @@ int main(void)
 	// 2. copy our vertices array in a buffer for OpenGL to use
 	//  Creates a data store for the buffer objects
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);			// Binding VBO
-	glBufferData(GL_ARRAY_BUFFER, sizeof(three_triangle_vert), three_triangle_vert, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	
 	// copy index array in an element buffer for OpenGL
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // Binding EBO
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(three_triangle_indices), three_triangle_indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// 3. then set our vertex attributes pointers
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+
+	// Position Attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
 	(void*)0);
-	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(0); // Enable position attribute
+
+	// Colour Attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);	// Enabled colour attribute
 
 	// Create a Shader Program from a vertex shader source and fragment shader source
 	std::string vertexShaderSource = ParseShader("include/shaders/VertShader.glsl");
@@ -156,7 +160,7 @@ int main(void)
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(VAO);
 		GLClearError();
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 		GLCheckError();
 
 		// Unbind the VAO
