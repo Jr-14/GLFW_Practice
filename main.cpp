@@ -64,9 +64,9 @@ int main(void)
 	// Vertices to draw an equilateral triangle
 	GLfloat vertices[] = 
 	{	// positions        // Colours
-		-0.5f,  -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,	 // 0 - bottom right
-		 0.5f,  -0.5f,  0.0f,  0.0f,  1.0f,  0.0f,   // 1 - bottom left
-		 0.0f,   0.5f,  0.0f,  0.0f,  0.0f,  1.0f	 // 2 - top middle
+		-0.5f,  -0.5f,  1.0f,  0.0f,  1.0f,  0.0f,	 // 0 - bottom left
+		 0.5f,  -0.5f,  0.0f,  0.0f,  0.0f,  1.0f,   // 1 - bottom right
+		 0.0f,   0.5f,  0.0f,  1.0f,  0.0f,  0.0f	 // 2 - top middle
 	};
 
 	unsigned int indices[] =
@@ -135,6 +135,11 @@ int main(void)
 	// Wireframe mode if enabled
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	// enable blending
+	glEnable(GL_BLEND);
+	// Blend function
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Render Loop
 	while(!glfwWindowShouldClose(window))
 	{
@@ -143,18 +148,17 @@ int main(void)
 
 		// ... Render here
 		// Clear the colourbufer
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Use the Shader Program
 		// glUseProgram(shaderProgram);
 		ourShader.use();
 
-		// update the uniform color
-		// float timeValue = glfwGetTime();
-		// float greenValue = std::sin(timeValue) / 2.0f + 0.5f;
-		// int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColour");
-		// glUniform4f(vertexColorLocation, 0.05f, greenValue, 0.05f, 1.0f);
+		// update the alpha value and set the triangle to change alpha values
+		float timeValue = glfwGetTime();
+		float alphaValue = std::sin(timeValue) / 2.0f + 0.5f;
+		ourShader.setFloat("ourAlpha", alphaValue);
 
 		// Drawing code in render loop
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
