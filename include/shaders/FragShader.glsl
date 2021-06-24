@@ -1,8 +1,8 @@
 # version 330 core 
 out vec4 FragColor;
 
-in vec4 vertexColour;	// input variable from vertex shader (same name and type)
+uniform vec4 ourColour;	// we set this variable in the OpenGL code.
 void main()
 {
-	FragColor = vertexColour;
+	FragColor = ourColour;
 }

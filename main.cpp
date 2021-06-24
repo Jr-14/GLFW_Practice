@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <cmath>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -126,8 +127,6 @@ int main(void)
 	std::string vertexShaderSource = ParseShader("include/shaders/VertShader.glsl");
 	std::string fragmentShaderSource = ParseShader("include/shaders/FragShader.glsl");
 	GLuint shaderProgram = CreateShader(vertexShaderSource, fragmentShaderSource);
-	// Use the Shader Program
-	glUseProgram(shaderProgram);
 	
 	// Wireframe mode if enabled
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -139,8 +138,19 @@ int main(void)
 		processInput(window);
 
 		// ... Render here
+		// Clear the colourbufer
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Use the Shader Program
+		glUseProgram(shaderProgram);
+
+		// update the uniform color
+		float timeValue = glfwGetTime();
+		float greenValue = std::sin(timeValue) / 2.0f + 0.5f;
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColour");
+
+		glUniform4f(vertexColorLocation, 0.05f, greenValue, 0.05f, 1.0f);
 
 		// Drawing code in render loop
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
