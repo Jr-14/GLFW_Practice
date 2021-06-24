@@ -109,11 +109,12 @@ int main(void)
 	glBindVertexArray(VAO);
 
 	// 2. copy our vertices array in a buffer for OpenGL to use
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);			// Binding VBO
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // Binding EBO
-
 	//  Creates a data store for the buffer objects
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);			// Binding VBO
 	glBufferData(GL_ARRAY_BUFFER, sizeof(three_triangle_vert), three_triangle_vert, GL_STATIC_DRAW);
+	
+	// copy index array in an element buffer for OpenGL
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // Binding EBO
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(three_triangle_indices), three_triangle_indices, GL_STATIC_DRAW);
 
 	// 3. then set our vertex attributes pointers
@@ -143,9 +144,13 @@ int main(void)
 
 		// Drawing code in render loop
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(VAO);
 		GLClearError();
 		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, nullptr);
 		GLCheckError();
+
+		// Unbind the VAO
+		glBindVertexArray(0);
 
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);
