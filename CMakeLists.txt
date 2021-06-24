@@ -13,6 +13,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/glfw-3.3.4)
 
 add_executable(glfw-practice 
   main.cpp
+  shader.cpp
   glad.c
 ) 
 
