@@ -14,6 +14,7 @@ find_package(OpenGL REQUIRED)
 
 target_link_libraries(openGLApp OpenGL::GL)
 
-if (UNIX)
+# Compile Options on Unix machines
+if (UNIX AND NOT APPLE)
   add_compile_options(-Wall -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl)
-endif (UNIX)
+endif ()
