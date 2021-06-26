@@ -3,28 +3,11 @@ cmake_minimum_required(VERSION 3.20.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(glfw-practice VERSION 1.0)
+project(OpenGL_Practice VERSION 1.0)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(glfw-3.3.4)
-
-add_executable(glfw-practice 
-  main.cpp
-  shader.cpp
-  glad.c
-) 
-
-target_include_directories(glfw-practice PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-target_link_libraries(glfw-practice glfw)
-
-find_package(OpenGL REQUIRED)
-
-target_link_libraries(glfw-practice OpenGL::GL)
-
-if (UNIX)
-  add_compile_options(-Wall -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl)
-endif (UNIX)
+add_subdirectory(src)
