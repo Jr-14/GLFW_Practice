@@ -150,6 +150,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// load and generate the awesome face texture
+	stbi_set_flip_vertically_on_load(true);	// flip the y-axis during image loading
 	data = stbi_load("textures/awesomeface.png", &width, &height,
 	&nrChannels, 0);
 
@@ -163,6 +164,7 @@ int main()
 	{
 		std::cout << "Failed to load texture" << std::endl;
 	}
+	
 
 	stbi_image_free(data);
 
