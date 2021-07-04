@@ -109,9 +109,9 @@ int main()
 	*/ 
 
 	// whole process of generating a texture 
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	unsigned int texture1, texture2;
+	glGenTextures(1, &texture1);
+	glBindTexture(GL_TEXTURE_2D, texture1);
 
 	// set the texture wrapping/filtering options (on currently bound texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -119,9 +119,11 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	// load and generate the texture
+	// load and generate the texture container
 	int width, height, nrChannels;
-	unsigned char *data = stbi_load("textures/container.jpg", &width, &height,
+	unsigned char *data;
+
+	data = stbi_load("textures/container.jpg", &width, &height,
 	&nrChannels, 0);
 
 	if (data)
@@ -137,8 +139,43 @@ int main()
 
 	stbi_image_free(data);
 
+	// Bind and Activate the awesome face texture
+	glGenTextures(1, &texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	// set the texture wrapping/filtering options (on currently bound texture)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// load and generate the awesome face texture
+	data = stbi_load("textures/awesomeface.png", &width, &height,
+	&nrChannels, 0);
+
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA,
+		GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+
+	stbi_image_free(data);
+
 	// Wireframe mode
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	// Use the shader program
+	ourShader.use();
+
+	// Have to tell OpenGL to which texture unit each shader sampler belongs to by setting
+	// sampler using glUniform1i
+	// glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);	// manually
+	ourShader.setInt("texture2", 1);	// or with shader class
 
 	// Render Loop
 	while(!glfwWindowShouldClose(window))
@@ -163,7 +200,11 @@ int main()
 		// glUniform4f(vertexColourLocation, 0.0f, greenValue, 0.0f, 1.0f);	// change the green colour value
 
 		// Render the an orange triangle
-		glBindTexture(GL_TEXTURE_2D, texture);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture1);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, texture2);
+
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
