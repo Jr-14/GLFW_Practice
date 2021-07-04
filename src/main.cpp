@@ -126,8 +126,8 @@ int main(void)
 	glEnableVertexAttribArray(1);	// Enabled colour attribute
 
 	// Create a Shader Program from a vertex shader source and fragment shader source
-	const char *vertexShaderSource = "include/shaders/VertShader.glsl";
-	const char *fragmentShaderSource = "include/shaders/FragShader.glsl";
+	const char *vertexShaderSource = "shaders/VertShader.glsl";
+	const char *fragmentShaderSource = "shaders/FragShader.glsl";
 
 	// Shader Program Constur
 	Shader ourShader(vertexShaderSource, fragmentShaderSource);
