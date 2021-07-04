@@ -6,7 +6,7 @@ add_executable(openGLApp
   shader.cpp
 )
 
-target_include_directories(openGLApp PRIVATE ${OpenGL_Practice_SOURCE_DIR}/include)
+target_include_directories(openGLApp PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 target_link_libraries(openGLApp glfw)
 
@@ -16,5 +16,5 @@ target_link_libraries(openGLApp OpenGL::GL)
 
 # Compile Options on Unix machines
 if (UNIX AND NOT APPLE)
-  add_compile_options(-Wall -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl)
+  add_compile_options(-Wall -lglfw3 -lopengl32 -lgdi32)
 endif ()
