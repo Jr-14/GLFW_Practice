@@ -18,4 +18,3 @@ target_link_libraries(openGLApp OpenGL::GL)
 if (UNIX AND NOT APPLE)
   add_compile_options(-Wall -lglfw3 -lopengl32 -lgdi32)
 endif ()
-
