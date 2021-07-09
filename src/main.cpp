@@ -82,6 +82,12 @@ int main()
 		2, 3, 0  // second triangle
 	};
 
+	/*Usually when you haave multiple objects you want to draw, you first generate/configure all the VAOs
+	(and thus the required VBO and attribute pointers) and store those for later use. The momenet we want
+	to draw one of our objects, we take the corresponding VAO, bind it, then draw the object and unbind the
+	VAO again
+	*/ 
+
 	// Vertex Buffer Objects (VBO)
 	// Vertex Array Objects (VAO)
 	unsigned int VBO, VAO, EBO;
@@ -105,12 +111,6 @@ int main()
 	// Texture attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
-
-	/*Usually when you haave multiple objects you want to draw, you first generate/configure all the VAOs
-	(and thus the required VBO and attribute pointers) and store those for later use. The momenet we want
-	to draw one of our objects, we take the corresponding VAO, bind it, then draw the object and unbind the
-	VAO again
-	*/ 
 
 	// whole process of generating a texture 
 	/********************************************************
