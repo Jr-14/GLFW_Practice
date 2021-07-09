@@ -8,6 +8,11 @@
 #include "stb_image.h"
 #include "shader.h"
 
+// OpenGL Mathmematics (glm)
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -37,6 +42,14 @@ int main()
 	// A context must only be made current on a single thread at a time and each thread can have only a single 
 	// current context at a time.
 	glfwMakeContextCurrent(window);
+
+	// See if we can put transformation by translating a vector of (1,0,0) by (1,1,0)
+	// Note that we define it as glm::vec4 with its homogenous coordinate set 1.0:
+	glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+	glm::mat4 trans = glm::mat4(1.0f);
+	trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+	vec = trans * vec;
+	std::cout << vec.x << vec.y << vec.z << std::endl;
 
 	// Make Context current first before initialising glad
 	// https://stackoverflow.com/questions/48650497/glad-failing-to-initialize
