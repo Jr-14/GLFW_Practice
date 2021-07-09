@@ -6,7 +6,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-#include "shader.h"
+#include "shader.hpp"
 
 // OpenGL Mathmematics (glm)
 #include <glm/glm.hpp>
