@@ -121,18 +121,12 @@ int main()
 	*/ 
 
 	// whole process of generating a texture 
-<<<<<<< HEAD
-	unsigned int texture1, texture2;
-	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-=======
 	/********************************************************
 	 Generate the container texture
 	 ********************************************************/
 	unsigned int containerTexture;
 	glGenTextures(1, &containerTexture);
 	glBindTexture(GL_TEXTURE_2D, containerTexture);
->>>>>>> master
 
 	// set the texture wrapping/filtering options (on currently bound texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -160,18 +154,12 @@ int main()
 
 	stbi_image_free(data);
 
-<<<<<<< HEAD
-	// Bind and Activate the awesome face texture
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-=======
 	/********************************************************
 	 Generate the Awesome face texture
 	 ********************************************************/
 	unsigned int awesomeFaceTexture;
 	glGenTextures(1, &awesomeFaceTexture);
 	glBindTexture(GL_TEXTURE_2D, awesomeFaceTexture);
->>>>>>> master
 
 	// set the texture wrapping/filtering options (on currently bound texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -179,16 +167,9 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-<<<<<<< HEAD
-	// load and generate the awesome face texture
-	stbi_set_flip_vertically_on_load(true);	// flip the y-axis during image loading
-	data = stbi_load("textures/awesomeface.png", &width, &height,
-	&nrChannels, 0);
-=======
 	// Flip the y-axis during image loading 
 	stbi_set_flip_vertically_on_load(true);
 	data = stbi_load("textures/awesomeface.png", &width, &height, &nrChannels, 0);
->>>>>>> master
 
 	if (data)
 	{
@@ -200,22 +181,6 @@ int main()
 	{
 		std::cout << "Failed to load texture" << std::endl;
 	}
-<<<<<<< HEAD
-	
-
-	stbi_image_free(data);
-
-	// Wireframe mode
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	// Use the shader program
-	ourShader.use();
-
-	// Have to tell OpenGL to which texture unit each shader sampler belongs to by setting
-	// sampler using glUniform1i
-	// glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);	// manually
-	ourShader.setInt("texture2", 1);	// or with shader class
-=======
 
 	stbi_image_free(data);
 
@@ -229,7 +194,6 @@ int main()
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
 
->>>>>>> master
 
 	// Render Loop
 	while(!glfwWindowShouldClose(window))
@@ -254,20 +218,12 @@ int main()
 		// glUniform4f(vertexColourLocation, 0.0f, greenValue, 0.0f, 1.0f);	// change the green colour value
 
 		// Render the an orange triangle
-<<<<<<< HEAD
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
-
-=======
 		// To use the second texture (and the first texture) we'd have to change the rendering procedure
 		// a bit by bindong both texture to the corresponding texture unit
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, containerTexture);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, awesomeFaceTexture);
->>>>>>> master
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
