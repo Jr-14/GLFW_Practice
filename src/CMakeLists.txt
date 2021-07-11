@@ -4,6 +4,8 @@ add_executable(openGLApp
   main.cpp
   glad.c
   shader.cpp
+  #Textures8.19-Exercise1.cpp
+  #shape.cpp
 )
 
 target_include_directories(openGLApp PRIVATE ${PROJECT_SOURCE_DIR}/include)
