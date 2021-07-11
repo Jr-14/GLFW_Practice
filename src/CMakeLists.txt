@@ -4,7 +4,7 @@ add_executable(openGLApp
   main.cpp
   glad.c
   shader.cpp
-  #Textures8.19-Exercise1.cpp
+  #Textures8.19-Exercise2.cpp
   #shape.cpp
 )
 
