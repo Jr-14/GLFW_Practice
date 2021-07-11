@@ -112,6 +112,10 @@ int main()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
+	// Unbind the VBO and VAO
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
 	// whole process of generating a texture 
 	/********************************************************
 	 Generate the container texture
@@ -232,6 +236,10 @@ int main()
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	// Delete the VBO and VAO object
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
 
 	// Terminate GLFW
 	glfwTerminate();
