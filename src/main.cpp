@@ -52,8 +52,11 @@ int main()
 		return -1;
 	}
 
+	int frameBufferWidth, frameBufferHeight;
+	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
+
 	// Render the window
-	glViewport(0, 0, 1200, 900);
+	glViewport(0, 0, frameBufferWidth, frameBufferHeight);
 
 	// tell GLFW we want to call this function on every window resize by registering it
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
