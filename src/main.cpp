@@ -50,9 +50,14 @@ int main()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
+	// issues with retina display such that the width and height of the 
+	// viewport must be the same as the buffer size
+	// https://stackoverflow.com/questions/31303291/opengl-rendering-constricted-to-bottom-left-quarter-of-the-screen
+	int frameBufferWidth, frameBufferHeight;
+	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
 
 	// Render the window
-	glViewport(0, 0, 1200, 900);
+	glViewport(0, 0, frameBufferWidth, frameBufferHeight);
 
 	// tell GLFW we want to call this function on every window resize by registering it
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);

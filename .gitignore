@@ -4,6 +4,8 @@
 out/*
 out/build/*
 
+bin/*
+
 *.sh
 
 .DS_Store
