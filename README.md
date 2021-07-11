@@ -2,7 +2,7 @@
 
 This is a repo for my journey in learning graphics programming using C++, GLFW3 and OpenGL through the tutorials provided in learnOpenGL and other sources.
 
-Transformation Chapter - Exercise:
+**Chapter 8 Transformation - Exercise:**
 
 ![Transforming then Scaling vs Rotating vs Transforming](images/scaling.gif)
 
