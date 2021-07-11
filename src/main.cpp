@@ -26,8 +26,9 @@ int main()
 	// Forward Compatibility with Mac OS X
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-	// std::cout << "Hello World!! FUCK" << std::endl;
-
+	// View port height and width
+	const unsigned int V_WIDTH = 1200;
+	const unsigned int V_HEIGHT = 900;
 
 	// Create a window!
 	GLFWwindow* window = glfwCreateWindow(1200, 900, "LearnOpenGL", NULL, NULL);
@@ -205,13 +206,29 @@ int main()
 		// Use the shader program
 		ourShader.use();
 
-		// Note that we define it as glm::vec4 with its homogenous coordinate set 1.0:
-		glm::mat4 trans = glm::mat4(1.0f);
-		trans = glm::translate(trans, glm::vec3(0.5, -0.5f, 0.0f));
-		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		// Define the model matrix
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+		// Define the view matrix
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		// Define the projection matrix
+		glm::mat4 proj;
+		proj = glm::perspective(glm::radians(45.0f), (float)V_WIDTH / (float)V_HEIGHT, 0.1f, 100.0f);
+
+		// Send the model matrix to the shader
+		int modelLoc = glGetUniformLocation(ourShader.ID, "model");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+		// Send the view matrix to the shader
+		int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+
+		// Send the projection matrix to the shader
+		int projLoc = glGetUniformLocation(ourShader.ID, "projection");
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
 
 		// Determine the colour of the triangle
 		// float timeValue = glfwGetTime();
