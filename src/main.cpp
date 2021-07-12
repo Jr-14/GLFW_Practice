@@ -31,7 +31,7 @@ int main()
 	const unsigned int V_HEIGHT = 900;
 
 	// Create a window!
-	GLFWwindow* window = glfwCreateWindow(1200, 900, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(V_WIDTH, V_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
