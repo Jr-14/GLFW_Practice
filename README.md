@@ -18,11 +18,11 @@ above.
 
 # Completed Chapter Snippets
 
-###Chapter 8 Transformation - Exercise:
+### Chapter 8 Transformation - Exercise:
 
 ![Transforming then Scaling vs Rotating vs Transforming](images/scaling.gif)
 
-###Chapter 9 3D!!
+### Chapter 9 3D!!
 
 ![3D Cube with rotation and Depth Testing](images/rotating_cube.gif)
 
