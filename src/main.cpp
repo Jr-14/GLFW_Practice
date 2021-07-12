@@ -57,9 +57,6 @@ int main()
 	int frameBufferWidth, frameBufferHeight;
 	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
 
-	int frameBufferWidth, frameBufferHeight;
-	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
-
 	// Render the window
 	glViewport(0, 0, frameBufferWidth, frameBufferHeight);
 
