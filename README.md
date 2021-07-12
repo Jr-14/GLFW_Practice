@@ -6,6 +6,10 @@ This is a repo for my journey in learning graphics programming using C++, GLFW3 
 
 ![Transforming then Scaling vs Rotating vs Transforming](images/scaling.gif)
 
+**Chapter 9 3D!!**
+
+![3D Cube with rotation and Depth Testing](images/rotating_cube.gif)
+
 ## Learning Sources
 
 [OpenGL Docs](https://docs.gl/) - Concise documentation for OpenGL functions and methods.
