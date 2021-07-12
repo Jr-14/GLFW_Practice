@@ -2,15 +2,7 @@
 
 This is a repo for my journey in learning graphics programming using C++, GLFW3 and OpenGL through the tutorials provided in Learn OpenGL and other sources.
 
-**Chapter 8 Transformation - Exercise:**
-
-![Transforming then Scaling vs Rotating vs Transforming](images/scaling.gif)
-
-**Chapter 9 3D!!**
-
-![3D Cube with rotation and Depth Testing](images/rotating_cube.gif)
-
-## Learning Sources
+# Learning Sources
 
 [OpenGL Docs](https://docs.gl/) - Concise documentation for OpenGL functions and methods.
 
@@ -23,3 +15,14 @@ the basics of OpenGL provided by freeCodeCamp.
 
 [YouTube - OpenGL Tutorial Playlist - by Victor Gordan](https://www.youtube.com/playlist?list=PLPaoO-vpZnumdcb4tZc4x5Q-v7CkrQ6M-) - YouTube playlist series by Victor Gordan who follows along the learning resources provided in the Learn OpenGL book provided
 above.
+
+# Completed Chapter Snippets
+
+### Chapter 8 Transformation - Exercise:
+
+![Transforming then Scaling vs Rotating vs Transforming](images/scaling.gif)
+
+### Chapter 9 3D!!
+
+![3D Cube with rotation and Depth Testing](images/rotating_cube.gif)
+
