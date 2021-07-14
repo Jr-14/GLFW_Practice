@@ -19,4 +19,6 @@ target_link_libraries(openGLApp OpenGL::GL)
 # Compile Options on Unix machines
 if (UNIX AND NOT APPLE)
   add_compile_options(-Wall -lglfw3 -lopengl32 -lgdi32)
+else ()
+  add_compile_options(-Wall)
 endif ()
